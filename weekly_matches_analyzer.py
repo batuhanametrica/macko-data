@@ -1,7 +1,6 @@
 import pandas as pd
 import json
 from datetime import datetime
-import openpyxl
 
 def extract_weekly_matches():
     try:
