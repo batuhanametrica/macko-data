@@ -1,6 +1,7 @@
 import pandas as pd
 import json
 from datetime import datetime
+import openpyxl
 
 def extract_weekly_matches():
     try:
@@ -20,7 +21,8 @@ def extract_weekly_matches():
         'other_stats': [],
         'top_scorers': [],
         'goal_times': [],
-        'half_time_stats': []
+        'half_time_stats': [],
+        'facts': []
     }
     
     for match_code, match_data in match_details.items():
@@ -259,6 +261,28 @@ def extract_weekly_matches():
                 )
             }
 
+            # Facts istatistiklerini ekle
+            facts_stats = {
+                'mac': basic_match_info['mac'],
+                'fact1': '',
+                'fact2': '',
+                'fact3': '',
+                'fact4': '',
+                'fact5': ''
+            }
+
+            # Mevcut facts'leri sözlüğe ekle
+            facts_list = match_data['data'].get('facts', [])
+            for i, fact in enumerate(facts_list[:5]):  # İlk 5 fact'i al
+                facts_stats[f'fact{i+1}'] = fact['fact']
+
+            # all_matches_data sözlüğüne facts kategorisini ekle
+            if 'facts' not in all_matches_data:
+                all_matches_data['facts'] = []
+
+            # Veriyi listeye ekle
+            all_matches_data['facts'].append(facts_stats)
+
             # Her kategorideki verileri ilgili listeye ekle
             all_matches_data['basic_info'].append(basic_match_info)
             all_matches_data['goal_stats'].append(goal_stats)
@@ -288,16 +312,15 @@ def create_weekly_report(dataframes):
     pd.set_option('display.max_columns', None)
     pd.set_option('display.width', None)
     
-    # Check if we have any non-empty DataFrames
     if not any(len(df) > 0 for df in dataframes.values()):
         print("No data available to write to Excel.")
         return
     
-    # Her kategori için ayrı Excel sayfası oluştur
-    with pd.ExcelWriter('haftalik_maclar.xlsx') as writer:
+    with pd.ExcelWriter('haftalik_maclar.xlsx', engine='openpyxl') as writer:
         for category, df in dataframes.items():
-            if len(df) > 0:  # Only write non-empty DataFrames
+            if len(df) > 0:
                 df.to_excel(writer, sheet_name=category, index=False)
+
     
     print("\nHaftalık maçlar 'haftalik_maclar.xlsx' dosyasına kaydedildi")
 
