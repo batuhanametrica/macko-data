@@ -271,39 +271,7 @@ def parse_match_data(match_data):
             parsed_data['top_scorers'].append(top_scorers_stats)
             parsed_data['half_time_stats'].append(half_time_stats)
 
-            # Add over/under stats dictionary
-            over_under_stats = {
-                'mac': basic_match_info['mac'],
-                'ev_sahibi': match['team_A']['display_name'],
-                'deplasman': match['team_B']['display_name'],
-                
-                # Team A (Home) over/under stats
-                'ev_sahibi_0_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][0]['o']),
-                'ev_sahibi_0_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][0]['u']),
-                'ev_sahibi_1_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][1]['o']),
-                'ev_sahibi_1_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][1]['u']),
-                'ev_sahibi_2_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][2]['o']),
-                'ev_sahibi_2_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][2]['u']),
-                'ev_sahibi_3_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][3]['o']),
-                'ev_sahibi_3_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][3]['u']),
-                'ev_sahibi_4_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][4]['o']),
-                'ev_sahibi_4_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][4]['u']),
-                
-                # Team B (Away) over/under stats
-                'deplasman_0_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][0]['o']),
-                'deplasman_0_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][0]['u']),
-                'deplasman_1_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][1]['o']),
-                'deplasman_1_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][1]['u']),
-                'deplasman_2_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][2]['o']),
-                'deplasman_2_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][2]['u']),
-                'deplasman_3_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][3]['o']),
-                'deplasman_3_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][3]['u']),
-                'deplasman_4_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][4]['o']),
-                'deplasman_4_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][4]['u'])
-            }
-
-            # Add over_under_stats to parsed_data
-            parsed_data['over_under_stats'].append(over_under_stats)
+            
 
             # Add back the goal_times_stats dictionary after top_scorers_stats
             goal_times_stats = {
@@ -357,6 +325,77 @@ def parse_match_data(match_data):
 
             # Add back the append operation in the data collection section
             parsed_data['goal_times'].append(goal_times_stats)
+
+            # Over/Under stats
+            try:
+                # Önce statistics içindeki type 18 olan veriyi bulalım
+                team_A_overunder_stats = next((stat for stat in match_data['data']['h2h']['statistics']['team_A'] 
+                                   if stat['type'] == 18), None)
+                team_B_overunder_stats = next((stat for stat in match_data['data']['h2h']['statistics']['team_B'] 
+                                   if stat['type'] == 18), None)
+                
+                if team_A_overunder_stats and team_B_overunder_stats:
+                    over_under_stats = {
+                        'mac': basic_match_info['mac'],
+                        'ev_sahibi': match['team_A']['display_name'],
+                        'deplasman': match['team_B']['display_name'],
+                        
+                        # Team A (Home) over/under stats
+                        'ev_sahibi_0_5_alti_mac_sayisi': int(team_A_overunder_stats['overall'][0]['u']),
+                        'ev_sahibi_0_5_ustu_mac_sayisi': int(team_A_overunder_stats['overall'][0]['o']),
+                        'ev_sahibi_1_5_alti_mac_sayisi': int(team_A_overunder_stats['overall'][1]['u']),
+                        'ev_sahibi_1_5_ustu_mac_sayisi': int(team_A_overunder_stats['overall'][1]['o']),
+                        'ev_sahibi_2_5_alti_mac_sayisi': int(team_A_overunder_stats['overall'][2]['u']),
+                        'ev_sahibi_2_5_ustu_mac_sayisi': int(team_A_overunder_stats['overall'][2]['o']),
+                        'ev_sahibi_3_5_alti_mac_sayisi': int(team_A_overunder_stats['overall'][3]['u']),
+                        'ev_sahibi_3_5_ustu_mac_sayisi': int(team_A_overunder_stats['overall'][3]['o']),
+                        'ev_sahibi_4_5_alti_mac_sayisi': int(team_A_overunder_stats['overall'][4]['u']),
+                        'ev_sahibi_4_5_ustu_mac_sayisi': int(team_A_overunder_stats['overall'][4]['o']),
+                        
+                        # Team B (Away) over/under stats
+                        'deplasman_0_5_alti_mac_sayisi': int(team_B_overunder_stats['overall'][0]['u']),
+                        'deplasman_0_5_ustu_mac_sayisi': int(team_B_overunder_stats['overall'][0]['o']),
+                        'deplasman_1_5_alti_mac_sayisi': int(team_B_overunder_stats['overall'][1]['u']),
+                        'deplasman_1_5_ustu_mac_sayisi': int(team_B_overunder_stats['overall'][1]['o']),
+                        'deplasman_2_5_alti_mac_sayisi': int(team_B_overunder_stats['overall'][2]['u']),
+                        'deplasman_2_5_ustu_mac_sayisi': int(team_B_overunder_stats['overall'][2]['o']),
+                        'deplasman_3_5_alti_mac_sayisi': int(team_B_overunder_stats['overall'][3]['u']),
+                        'deplasman_3_5_ustu_mac_sayisi': int(team_B_overunder_stats['overall'][3]['o']),
+                        'deplasman_4_5_alti_mac_sayisi': int(team_B_overunder_stats['overall'][4]['u']),
+                        'deplasman_4_5_ustu_mac_sayisi': int(team_B_overunder_stats['overall'][4]['o'])
+                    }
+                    parsed_data['over_under_stats'].append(over_under_stats)
+                else:
+                    raise KeyError("Type 18 statistics not found")
+                    
+            except (KeyError, IndexError) as e:
+                print(f"Warning: Over/Under statistics not available for match {basic_match_info['mac']}")
+                # Eksik veri durumunda boş bir sözlük ekleyelim
+                parsed_data['over_under_stats'].append({
+                    'mac': basic_match_info['mac'],
+                    'ev_sahibi': match['team_A']['display_name'],
+                    'deplasman': match['team_B']['display_name'],
+                    'ev_sahibi_0_5_alti_mac_sayisi': 0,
+                    'ev_sahibi_0_5_ustu_mac_sayisi': 0,
+                    'ev_sahibi_1_5_alti_mac_sayisi': 0,
+                    'ev_sahibi_1_5_ustu_mac_sayisi': 0,
+                    'ev_sahibi_2_5_alti_mac_sayisi': 0,
+                    'ev_sahibi_2_5_ustu_mac_sayisi': 0,
+                    'ev_sahibi_3_5_alti_mac_sayisi': 0,
+                    'ev_sahibi_3_5_ustu_mac_sayisi': 0,
+                    'ev_sahibi_4_5_alti_mac_sayisi': 0,
+                    'ev_sahibi_4_5_ustu_mac_sayisi': 0,
+                    'deplasman_0_5_alti_mac_sayisi': 0,
+                    'deplasman_0_5_ustu_mac_sayisi': 0,
+                    'deplasman_1_5_alti_mac_sayisi': 0,
+                    'deplasman_1_5_ustu_mac_sayisi': 0,
+                    'deplasman_2_5_alti_mac_sayisi': 0,
+                    'deplasman_2_5_ustu_mac_sayisi': 0,
+                    'deplasman_3_5_alti_mac_sayisi': 0,
+                    'deplasman_3_5_ustu_mac_sayisi': 0,
+                    'deplasman_4_5_alti_mac_sayisi': 0,
+                    'deplasman_4_5_ustu_mac_sayisi': 0
+                })
 
         except KeyError as e:
             print(f"KeyError while parsing match {match_uuid}: {e}")
