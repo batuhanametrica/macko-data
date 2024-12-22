@@ -278,28 +278,28 @@ def parse_match_data(match_data):
                 'deplasman': match['team_B']['display_name'],
                 
                 # Team A (Home) over/under stats
-                'ev_sahibi_0_5_alti_mac_sayisi': int(match_data['data']['statistics']['team_A'][0]['o']),
-                'ev_sahibi_0_5_ustu_mac_sayisi': int(match_data['data']['statistics']['team_A'][0]['u']),
-                'ev_sahibi_1_5_alti_mac_sayisi': int(match_data['data']['statistics']['team_A'][1]['o']),
-                'ev_sahibi_1_5_ustu_mac_sayisi': int(match_data['data']['statistics']['team_A'][1]['u']),
-                'ev_sahibi_2_5_alti_mac_sayisi': int(match_data['data']['statistics']['team_A'][2]['o']),
-                'ev_sahibi_2_5_ustu_mac_sayisi': int(match_data['data']['statistics']['team_A'][2]['u']),
-                'ev_sahibi_3_5_alti_mac_sayisi': int(match_data['data']['statistics']['team_A'][3]['o']),
-                'ev_sahibi_3_5_ustu_mac_sayisi': int(match_data['data']['statistics']['team_A'][3]['u']),
-                'ev_sahibi_4_5_alti_mac_sayisi': int(match_data['data']['statistics']['team_A'][4]['o']),
-                'ev_sahibi_4_5_ustu_mac_sayisi': int(match_data['data']['statistics']['team_A'][4]['u']),
+                'ev_sahibi_0_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][0]['o']),
+                'ev_sahibi_0_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][0]['u']),
+                'ev_sahibi_1_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][1]['o']),
+                'ev_sahibi_1_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][1]['u']),
+                'ev_sahibi_2_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][2]['o']),
+                'ev_sahibi_2_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][2]['u']),
+                'ev_sahibi_3_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][3]['o']),
+                'ev_sahibi_3_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][3]['u']),
+                'ev_sahibi_4_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][4]['o']),
+                'ev_sahibi_4_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_A'][4]['u']),
                 
                 # Team B (Away) over/under stats
-                'deplasman_0_5_alti_mac_sayisi': int(match_data['data']['statistics']['team_B'][0]['o']),
-                'deplasman_0_5_ustu_mac_sayisi': int(match_data['data']['statistics']['team_B'][0]['u']),
-                'deplasman_1_5_alti_mac_sayisi': int(match_data['data']['statistics']['team_B'][1]['o']),
-                'deplasman_1_5_ustu_mac_sayisi': int(match_data['data']['statistics']['team_B'][1]['u']),
-                'deplasman_2_5_alti_mac_sayisi': int(match_data['data']['statistics']['team_B'][2]['o']),
-                'deplasman_2_5_ustu_mac_sayisi': int(match_data['data']['statistics']['team_B'][2]['u']),
-                'deplasman_3_5_alti_mac_sayisi': int(match_data['data']['statistics']['team_B'][3]['o']),
-                'deplasman_3_5_ustu_mac_sayisi': int(match_data['data']['statistics']['team_B'][3]['u']),
-                'deplasman_4_5_alti_mac_sayisi': int(match_data['data']['statistics']['team_B'][4]['o']),
-                'deplasman_4_5_ustu_mac_sayisi': int(match_data['data']['statistics']['team_B'][4]['u'])
+                'deplasman_0_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][0]['o']),
+                'deplasman_0_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][0]['u']),
+                'deplasman_1_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][1]['o']),
+                'deplasman_1_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][1]['u']),
+                'deplasman_2_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][2]['o']),
+                'deplasman_2_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][2]['u']),
+                'deplasman_3_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][3]['o']),
+                'deplasman_3_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][3]['u']),
+                'deplasman_4_5_alti_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][4]['o']),
+                'deplasman_4_5_ustu_mac_sayisi': int(match_data['data']['h2h']['statistics']['team_B'][4]['u'])
             }
 
             # Add over_under_stats to parsed_data
